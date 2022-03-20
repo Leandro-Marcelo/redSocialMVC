@@ -1,0 +1,43 @@
+{{! en un futuro tendríamos que validar los input como el email, quizas con expresiones regulares como enseño JM en React y que existen librerías }}
+
+<main class="flex justify-center mt-20">
+  <form
+    class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5"
+    action="/login"
+    method="post"
+  >
+    {{! name: es el nombre de la propiedad cuando recibamos el formulario, es decir, a mi en el backend me va a llegar un json/objeto donde las propiedades/key tendrán el nombre que el frontendle ponga a los name: }}
+    {{! type: indica el tipo de formulario }}
+    {{! si bien el required es una parte de la validación, la otra parte se hace desde el backend }}
+    <input
+      type="email"
+      name="email"
+      placeholder="Email..."
+      value="{{user.email}}"
+      class="p-2"
+      required
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Password..."
+      class="p-2"
+      required
+    />
+    <button class="bg-blue-200">Iniciar sesión</button>
+    {{! este unless es como un if !() }}
+    {{! si existe error, muestra un modal que le dice el error que tiene, es decir, el frontend muestra el error que se produjo en el backend  }}
+    {{#unless validation.success}}
+      <ul>
+        {{#each validation.errors}}
+          <li class="text-red-700">
+            {{! este this va a mostrar en pantalla cada error del arreglo, o sea esta iterando el validation.erros, ya que acá no existe el user in users que tiene pug }}
+            {{this}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/unless}}
+
+  </form>
+</main>

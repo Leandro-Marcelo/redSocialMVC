@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    {{#if formCSS}}
+    <link rel="stylesheet" href="/css/forms.css">
+    {{/if}}
+</head>
+<body>
+  {{!-- con esta sintaxys traemos el componente, OJO para que funcione en nuestro server tenemos que poner partialsDir: path.join(__dirname, "views", "components"), sino no lo va a encontrar --}}
+    {{> navbar}}
+    {{!-- no me funciona el plugin de tailwind css IntelliSense --}}
+    {{!-- <h1 class="text-3xl font-bold text-green-100">Layout</h1> --}}
+    {{{body}}}
+
+    {{> footer}}
+</body>
+</html>

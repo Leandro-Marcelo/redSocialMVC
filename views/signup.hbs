@@ -1,0 +1,83 @@
+{{! en un futuro tendríamos que validar los input como el email, quizas con expresiones regulares como enseño JM en React y que existen librerías }}
+
+<main class="flex justify-center mt-20">
+
+  <form
+    class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5"
+    action="/signup"
+    method="post"
+  >
+    {{! name: es el nombre de la propiedad cuando recibamos el formulario en formato json }}
+    {{! type: indica el tipo de formulario }}
+    {{! si el usuario se equivoca lo ideal es que le vuelva a colocar los datos que había puesto para que no los vuelva a colocar, pero esto no incluye las contraseñas }}
+    <input
+      type="text"
+      name="name"
+      placeholder="Name..."
+      value="{{user.name}}"
+      class="p-2"
+      required
+    />
+    <input
+      type="email"
+      name="email"
+      placeholder="Email..."
+      value="{{user.email}}"
+      class="p-2"
+      required
+    />
+    <input
+      type="text"
+      name="username"
+      placeholder="Username..."
+      value="{{user.username}}"
+      class="p-2"
+      required
+    />
+    {{! cambiemos el tipo de date a datetime en la base de datos y acá de date a datetime-local para poder guardar la hora también, esto nos podría servir para agendar tareas que debo hacer en un futuro }}
+    <input
+      type="datetime-local"
+      name="birthday"
+      placeholder="Birthday..."
+      value="{{user.birthday}}"
+      class="p-2"
+      required
+    />
+    <input
+      type="text"
+      name="profilePic"
+      placeholder="Profile pic..."
+      value="{{user.profilePic}}"
+      class="p-2"
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="Password..."
+      class="p-2"
+      required
+    />
+    <input
+      type="password"
+      name="passwordRepeated"
+      placeholder="Repeat password..."
+      class="p-2"
+      required
+    />
+    <button class="bg-blue-200">Enviar</button>
+    {{! este unless es como un if !() }}
+    {{! si existe error, muestra un modal que le dice el error que tiene, es decir, el frontend muestra el error que se produjo en el backend  }}
+    {{#unless validation.success}}
+      <ul>
+        {{#each validation.errors}}
+          <li class="text-red-700">
+            {{! este this va a mostrar en pantalla cada error del arreglo, o sea esta iterando el validation.erros, ya que acá no existe el user in users que tiene pug }}
+            {{this}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/unless}}
+
+  </form>
+</main>

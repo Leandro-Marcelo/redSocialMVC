@@ -1,0 +1,51 @@
+{{#if session.loggedIn}}
+  <h1>Bienvenido {{session.username}}</h1>
+<h2>Solicitud de amistad</h2>
+  {{#if hasFriendRequests}}
+  <ul class="p-5">
+    {{#each friendRequests}}
+      <li class="bg-gray-100 p-2 mt-5">
+        <div class="flex items-center gap-5">
+          <img class="w-10 h-10 rounded-full" src="{{this.profile_pic}}" />
+          <div>
+            {{! no podemos poner simplemeente this porque estaríamos intentando poner un objeto dentro de un li }}
+            {{! OJO si no tienen fecha en la DB, te tira un error porque esta ejecutando el método pero sin nada y gg go next }}
+            <p class="font-bold text-lg">{{this.name}}</p>
+            <p>{{this.username}}</p>
+          </div>
+          {{! esto es para que solamente podamos enviar una solicitud si tenemos una sesión iniciada, cabe recalcar que si ponemos esto dentro del ciclo, no puede leer el session.loggedIn esto porque cambia de contexto, por eso estamos utilizando this, para hacer referencia al contexto anterior donde se encuentra session tenemos que hacer ../ para salir un momento  }}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="text-red-500">Ningun solicitud de amistad</p>
+{{/if}}
+
+{{else}}
+  <h1>Inicia sesión o registrate</h1>
+{{/if}}
+{{#if hasUsers}}
+  <ul class="p-5">
+    {{#each users}}
+      <li class="bg-gray-100 p-2 mt-5">
+        <div class="flex items-center gap-5">
+          <img class="w-10 h-10 rounded-full" src="{{this.profile_pic}}" />
+          <div>
+            {{! no podemos poner simplemeente this porque estaríamos intentando poner un objeto dentro de un li }}
+            {{! OJO si no tienen fecha en la DB, te tira un error porque esta ejecutando el método pero sin nada y gg go next }}
+            <p> {{formatDate this.birthday}} {{formatHour this.birthday}}</p>
+            <p>{{this.name}}</p>
+            <p>{{this.username}} {{this.email}}</p>
+          </div>
+          {{! esto es para que solamente podamos enviar una solicitud si tenemos una sesión iniciada, cabe recalcar que si ponemos esto dentro del ciclo, no puede leer el session.loggedIn esto porque cambia de contexto, por eso estamos utilizando this, para hacer referencia al contexto anterior donde se encuentra session tenemos que hacer ../ para salir un momento  }}
+          {{#if ../session.loggedIn}}
+            <a href="/addFriend/{{this.id}}" class="ml-auto" >Agregar</a>
+          {{/if}}
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="text-red-500">Ningun usuario registrado</p>
+{{/if}}
