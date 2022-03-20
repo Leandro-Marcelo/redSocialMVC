@@ -41,9 +41,21 @@ class User {
   static async readAll() {
     return await query("SELECT * FROM users");
   }
-  /* Hacer un filtro de los usuarios para retirarnos a nosotros */
-  static async readFilteredUser(idUser) {
-    return await query("SELECT * FROM users");
+
+  static async iCanAddIt(idUser) {
+    /* filtrar al user de users y luego filtrar para que solo le devuelva a las personas que no les ha enviado solicitud de amistad */
+    const people = await query(
+      "SELECT * FROM users WHERE id !=? and id NOT IN (SELECT users.id FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend1=?)",
+      [idUser, idUser]
+    );
+
+    /* Las personas que les he enviado solicitud de amistad */
+    const peopleWithFriendRequest = await query(
+      "SELECT * FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend1=?",
+      [idUser]
+    );
+
+    return { people, peopleWithFriendRequest };
   }
 
   /* si yo al insert le paso como argumento this, le estaría pasando todas las propiedades incluyendo el passwordRepeated como los métodos, en ciertos casos funcionaria pero no es lo correcto, entonces mejor hago un objeto de lo que le quiero pasar como data a la DB*/
@@ -61,12 +73,17 @@ class User {
     return newUser;
   }
 
+  // # addFriend: el idFriend1 le envía solicitud de amistad al idFriend2
+  /* INSERT INTO friendship(idFriend1, idFriend2) VALUES(12,15) */
   static async addFriend(idFriend1, idFriend2) {
     return await query(
       "INSERT INTO friendship(idFriend1, idFriend2) VALUES(?,?)",
       [idFriend1, idFriend2]
     );
   }
+
+  // # getFriendRequest: trae las solicitudes de amistad recibidas de idFriend2 y donde su status es igual a 0.
+  /* SELECT name, profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend1 WHERE idFriend2 = 12 AND status=0; */
   static async getFriendRequest(idUser) {
     return await query(
       "SELECT name, profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend1 WHERE idFriend2 = ? AND status=0;",

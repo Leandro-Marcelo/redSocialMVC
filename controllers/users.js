@@ -14,22 +14,30 @@ class UserController {
   // }
 
   async getUsersView(req, res) {
-    /* let data;
-    //este if es para sacarnos de la petición y para ver con quienes ya tenemos solicitud de amistad, es decir, quienes son nuestros amigos
+    let resData;
+    //este if es para sacarnos de la petición del readAll y para ver con quienes ya tenemos solicitud de amistad, es decir, quienes son nuestros amigos
     if (req.session.loggedIn) {
-      das;
+      const { people, peopleWithFriendRequest } = await User.iCanAddIt(
+        req.session.idUser
+      );
+      resData = {
+        people,
+        hasPeople: people.length > 0,
+        peopleWithFriendRequest,
+        hasPeopleWithFriendRequest: peopleWithFriendRequest.length > 0,
+      };
     } else {
-      data = await User.readAll();
-    } */
+      const users = await User.readAll();
+      resData = {
+        people: users,
+        hasPeople: users.length > 0,
+        hasPeopleWithFriendRequest: false,
+      };
+    }
 
-    const users = await User.readAll();
-    let resData = {
-      users,
-      hasUsers: users.length > 0,
-    };
     if (req.session.loggedIn) {
       const friendRequests = await User.getFriendRequest(req.session.idUser);
-      console.log(friendRequests);
+      /*  gi(friendRequests); */
       resData.friendRequests = friendRequests;
       resData.hasFriendRequests = friendRequests.length > 0;
     }
@@ -56,9 +64,9 @@ class UserController {
   /* SEARCH */
   async search(req, res) {
     const { search } = req.query;
-    console.log(search);
+    /* console.log(search); */
     let user = await User.likeName("users", search);
-    console.log(user);
+    /*  console.log(user); */
     return user;
   }
 
