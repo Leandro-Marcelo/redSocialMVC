@@ -34,6 +34,9 @@ routes: router.get("/", (req, res)=> {
 /* Acá no ponemos parentesis en getUsersView() porque tendríamos que pasar req, res .... y pues no xd */
 router.get("/", userController.getUsersView);
 router.get("/addFriend/:idFriend", userController.addFriend);
+/* implementé ahora en meet */
+router.get("/api/search", userController.search);
+/* router.put("/:id/like", userController.like); */
 
 /* Segunda posible solución 
 lo que hace un bind es añadir o hacer que el this tome el valor de userController, entonces esa instrucción de bind(userController) le dice que el this ya no va a ser el this de este scope sino el this específico del userController 

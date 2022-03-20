@@ -112,6 +112,14 @@ class User {
     }
     return result;
   }
+
+  /* SEARCH USERNAME */
+  static async likeName(tableName, input) {
+    const result = await query(
+      `SELECT * FROM ${tableName} WHERE username LIKE "%${input}%"`
+    );
+    return result;
+  }
 }
 
 module.exports = User;

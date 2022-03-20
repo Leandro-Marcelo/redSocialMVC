@@ -15,12 +15,14 @@ class AuthController {
 
   logOut(req, res) {
     /* esto nos sirve para limpiar la sesíon del usuario y como se limpia, cuando pase por el middleware va a guardar nada por lo que no va a proveer nada xd porque estará eliminado */
+    console.log(req.session);
     req.session.destroy();
     return res.redirect("/");
   }
 
   async logIn(req, res) {
     const credentials = req.body;
+    console.log(credentials);
     const userData = await User.getByEmail(credentials.email);
     if (userData.length === 0) {
       /* como el success esta vacio, allá por tener la negación se pasa a true y muestra este errors */
@@ -41,7 +43,6 @@ class AuthController {
     req.session.username = userData[0].username;
     /* no se puede poner req.session.id porque al parecer express-session guarda un id de tipo objeto por lo que tira error */
     req.session.idUser = userData[0].id;
-    console.log(req.session);
     return res.redirect("/");
   }
 

@@ -53,6 +53,23 @@ class UserController {
 
     res.redirect("/");
   }
+  /* SEARCH */
+  async search(req, res) {
+    const { search } = req.query;
+    console.log(search);
+    let user = await User.likeName("users", search);
+    console.log(user);
+    return user;
+  }
+
+  /* LIKE  */
+
+  /*  async like(req, res) {
+    const { id } = req.params;
+    //le envio el id del post que quiero likear/deslikear y mi id
+    const response = await postsService.likeDisLike(id, req.body);
+    return res.status(200).json(response);
+  } */
 }
 
 module.exports = UserController;
