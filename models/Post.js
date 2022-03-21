@@ -5,13 +5,17 @@ class Post {
   idPost;
   /* nos tirará error: Column 'idUser' cannot be null' si no le enviamos un idUser porque yo le puse en la base de datos que no fuera nulo (not null) pero también tendría que hacer una validación en el backend no? */
   constructor(post) {
+    console.log(post);
     /* console.log("parametros de constreuctor", post, idUser); */
     this.description = post.description;
     this.idUser = post.idUser;
+    this.date = post.date;
   }
 
   static async readAll() {
-    return await query("SELECT * FROM posts");
+    return await query(
+      "SELECT * FROM users JOIN posts ON users.id=posts.idUser"
+    );
   }
 
   static async iCanAddIt(idUser) {
@@ -34,6 +38,7 @@ class Post {
     const newPost = await insert("posts", {
       description: this.description,
       idUser: this.idUser,
+      date: this.date,
     });
     /* le asigna el id que devuelve la db a la propiedad idPost del objeto que acabamos de instanciar de la clase Post(si tenia la reemplaza si no tenía la crea)  */
     this.idPost = newPost.id;

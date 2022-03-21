@@ -82,6 +82,8 @@ app.engine(
     /* este helper podría mandarse como props a los componentes sin embargo, acá lo estamos haciendo global */
     helpers: {
       formatDate: function (date) {
+        // 2022-03-14T15:47:00.000Z
+        /* console.log(date); */
         /* como este parametro date no lo reconoce el DateTime pone a todos con la fecha de hoy  const newDate = new DateTime(date); La forma correcta de hacerlo sería */
         const newDate = DateTime.fromJSDate(date);
         return newDate.toFormat("yyyy-MM-dd");

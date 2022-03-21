@@ -1,26 +1,27 @@
 {{#if session.loggedIn}}
-<h1>Bienvenido {{session.username}}</h1>
+  <h1>Bienvenido {{session.username}}</h1>
 {{else}}
   <h1>Debes iniciar sesión si quieres crear un Post</h1>
 {{/if}}
 
-<br>
-<br>
+<br />
+<br />
 
 {{#if hasPosts}}
-<h2>Posts</h2>
+  <h2>Posts</h2>
   <ul class="p-5">
     {{#each posts}}
       <li class="bg-gray-100 p-2 mt-5">
         <div class="flex items-center gap-5">
           <img class="w-10 h-10 rounded-full" src="{{this.profile_pic}}" />
           <div>
-            <p>{{this.idUser}}</p>
-            <p>{{this.description}}</p>
+            <p class="font-bold text-lg">{{this.name}}</p>
+            <p>{{this.username}}</p>
           </div>
-          {{#if ../session.loggedIn}}
-            <a href="/addFriend/{{this.id}}" class="ml-auto" >Agregar</a>
-          {{/if}}
+          <div>
+            <p> {{formatDate this.date}} {{formatHour this.date}}</p>
+            <p>La descripción del post: {{this.description}}</p>
+          </div>
         </div>
       </li>
     {{/each}}

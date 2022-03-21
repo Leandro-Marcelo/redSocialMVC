@@ -54,7 +54,9 @@ class AuthController {
     //     firstName:"Tzuzul",
     //     ...
     // }
-
+    console.log(req.body);
+    console.log(req.body.birthday);
+    console.log(typeof req.body.birthday);
     /* los datos que vienen de la petición post en formato json se le envia como data a la class User para que cree un usuario con estos datos y lo retorna, luego lo vemos por el log y nos redirecciona. Repasar POO xd */
     const newUser = new User(req.body);
     /* console.log(newUser); */

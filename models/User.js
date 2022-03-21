@@ -24,6 +24,7 @@ class User {
     this.name = user.name;
     this.username = user.username;
     this.email = user.email;
+    /* envia desde el form algo así '2022-03-21T00:50' */
     this.birthday = user.birthday;
     this.profilePic = user.profilePic;
     this.password = user.password;
