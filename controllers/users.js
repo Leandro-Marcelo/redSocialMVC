@@ -76,11 +76,28 @@ class UserController {
 
   /* SEARCH */
   async search(req, res) {
+    console.log(req.session.idUser);
     const { search } = req.query;
-    /* console.log(search); */
-    let user = await User.likeName("users", search);
-    /*  console.log(user); */
-    return user;
+    let userSearched = await User.likeName("users", search);
+    let { people, peopleWithFriendRequest } = await User.iCanAddIt(
+      req.session.idUser
+    );
+    let resData = {
+      people,
+      hasPeople: people.length > 0,
+      peopleWithFriendRequest,
+      hasPeopleWithFriendRequest: peopleWithFriendRequest.length > 0,
+      userSearched,
+      hasUserSearched: userSearched.length > 0,
+    };
+
+    if (req.session.loggedIn) {
+      const friendRequests = await User.getFriendRequest(req.session.idUser);
+      /*  gi(friendRequests); */
+      resData.friendRequests = friendRequests;
+      resData.hasFriendRequests = friendRequests.length > 0;
+    }
+    return res.render("home", resData);
   }
 
   /* LIKE  */

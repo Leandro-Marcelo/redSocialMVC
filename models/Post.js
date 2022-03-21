@@ -45,17 +45,6 @@ class Post {
     return newPost;
   }
 
-  async update(newUser) {
-    const id = await query("UPDATE users SET ? WHERE idUser ?", [
-      newUser,
-      this.idUser,
-    ]);
-  }
-
-  async delete() {
-    await query("DELETE FROM users WHERE idUser = ?", [this.idUser]);
-  }
-
   validate() {
     let result = { success: true, errors: [] };
     if (!this.description) {

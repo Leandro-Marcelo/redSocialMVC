@@ -1,5 +1,59 @@
 {{#if session.loggedIn}}
 <h1>Bienvenido {{session.username}}</h1>
+<div class="flex justify-center mt-11">
+
+  <form
+    class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5"
+    action="/api/search"
+    method="get"
+  >
+    <input
+      type="search"
+      name="search"
+      placeholder="search friend..."
+      class="p-2"
+      required
+    />
+    <button class="bg-blue-200">Buscar</button>
+
+{{#if hasUserSearched}}
+<h2>Resultado de busqueda</h2>
+  <ul class="p-5">
+    {{#each userSearched}}
+      <li class="bg-gray-100 p-2 mt-5">
+        <div class="flex items-center gap-5">
+          <img class="w-10 h-10 rounded-full" src="{{this.profile_pic}}" />
+          <div>
+            <p> {{formatDate this.birthday}} {{formatHour this.birthday}}</p>
+            <p>{{this.name}}</p>
+            <p>{{this.username}} {{this.email}}</p>
+          </div>
+          {{!-- me toma el hasFriendRequest como undefined seguramente por el contexto --}}
+         {{!--  {{#if hasFriendRequests}}
+          <a href="/acceptFriend/{{this.id}}" class="ml-auto" >Aceptar</a>
+          {{else}}
+          <a href="/addFriend/{{this.id}}" class="ml-auto" >Agregar2</a>
+          {{/if}} --}}
+          
+        </div>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p class="text-red-500">Ningun usuario matcheo con tu busqueda</p>
+{{/if}}
+    {{#unless validation.success}}
+      <ul>
+        {{#each validation.errors}}
+          <li class="text-red-700">
+            {{this}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/unless}}
+
+  </form>
+</div>
 <br>
 <br>
 <h2>Solicitud de amistad</h2>
