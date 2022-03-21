@@ -12,7 +12,7 @@ class UserController {
   //     const users = await query("SELECT * FROM users")
   //     return users
   // }
-
+  /* xd */
   async getUsersView(req, res) {
     let resData;
     /* este if nos sirve para filtrar al usuario de user y ademas de filtrar a los que le hemos enviado solicitud (PERO NO HEMOS FILTRADO LAS SOLICITUDES QUE RECIBIMOS, faltaría agregar eso) */
