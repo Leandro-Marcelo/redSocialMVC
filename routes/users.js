@@ -34,6 +34,8 @@ routes: router.get("/", (req, res)=> {
 /* Acá no ponemos parentesis en getUsersView() porque tendríamos que pasar req, res .... y pues no xd */
 router.get("/", userController.getUsersView);
 router.get("/addFriend/:idFriend", userController.addFriend);
+/* acá explica porque agregó un id a la tabla friendship, y es luego hacer referencia a ella y cambiar el status ó tipo yo tengo el idMio por la session, paso el id del otro amigo, hago una busqueda para encontrar esos dos y cambio el status */
+router.get("/acceptFriend/:idFriend", userController.acceptFriend);
 /* implementé ahora en meet */
 router.get("/api/search", userController.search);
 /* router.put("/:id/like", userController.like); */

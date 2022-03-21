@@ -82,11 +82,28 @@ class User {
     );
   }
 
+  /* SE PODRÍA HACER CON UN PROMISE ALL, SERÁ MAS EFECTIVO, ES MAS BUENA PRÁCTICA SIENDO QUE SON ASINCRONAS */
+
+  /* el idFriend1 (sender, es decir, pepe) es quien envio y el idFriend2 (me) es quien recibio la wea, pero tambien el que va a aceptar */
+  static async acceptFriend(sender, me) {
+    /* acepto la solicitud de pepe */
+    const aceptandoSolicitud = await query(
+      "UPDATE friendship SET status=1 WHERE idFriend1=? AND idFriend2=?",
+      [sender, me]
+    );
+    const insertandoFriendshipOpuesta = await query(
+      "INSERT INTO friendship(idFriend1,idFriend2,status) VALUES(?,?,true)",
+      [me, sender]
+    );
+    return insertandoFriendshipOpuesta;
+  }
+
   // # getFriendRequest: trae las solicitudes de amistad recibidas de idFriend2 y donde su status es igual a 0.
   /* SELECT name, profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend1 WHERE idFriend2 = 12 AND status=0; */
+  /* también trae los id (y este debe ser users.id porque sino es ambiguo y lo renombro para que en home de handlebars sea simplemente this.id) de los usuarios que le enviaron solicitud porque nos servirá para el momento de aceptarlos (o sea para que en la base de datos saber quienes son)*/
   static async getFriendRequest(idUser) {
     return await query(
-      "SELECT name, profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend1 WHERE idFriend2 = ? AND status=0;",
+      "SELECT users.id AS id, name, profile_pic,username FROM friendship JOIN users ON users.id=friendship.idFriend1 WHERE idFriend2 = ? AND status=0;",
       [idUser]
     );
   }

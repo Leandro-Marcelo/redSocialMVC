@@ -101,6 +101,11 @@ app.engine(
           return `Hace ${Number.parseInt(-1 * diff.minutes)} minutos`;
         }
       },
+      toBoolean: function (number) {
+        /* no ponemos tres igual por si nos devuelve un 1 en formato String */
+        return number == 1;
+        /* eso que esta arriba es mejor que number == 1 ? true : false, su lógica esta a otro nivel */
+      },
     },
   })
 );

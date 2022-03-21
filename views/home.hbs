@@ -14,6 +14,7 @@
             {{! OJO si no tienen fecha en la DB, te tira un error porque esta ejecutando el método pero sin nada y gg go next }}
             <p class="font-bold text-lg">{{this.name}}</p>
             <p>{{this.username}}</p>
+            <a href="/acceptFriend/{{this.id}}" class="ml-auto" >Aceptar</a>
           </div>
           {{! esto es para que solamente podamos enviar una solicitud si tenemos una sesión iniciada, cabe recalcar que si ponemos esto dentro del ciclo, no puede leer el session.loggedIn esto porque cambia de contexto, por eso estamos utilizando this, para hacer referencia al contexto anterior donde se encuentra session tenemos que hacer ../ para salir un momento  }}
         </div>
@@ -26,7 +27,7 @@
 <br>
 <br>
 {{#if hasPeopleWithFriendRequest}}
-<h2>hasPeopleWithFriendRequest</h2>
+<h2>peopleWithFriendRequest and friends</h2>
   <ul class="p-5">
     {{#each peopleWithFriendRequest}}
       <li class="bg-gray-100 p-2 mt-5">
@@ -35,16 +36,22 @@
           <div>
             {{! no podemos poner simplemeente this porque estaríamos intentando poner un objeto dentro de un li }}
             {{! OJO si no tienen fecha en la DB, te tira un error porque esta ejecutando el método pero sin nada y gg go next }}
-            <p class="font-bold text-lg">{{this.name}}</p>
-            <p>{{this.username}}</p>
+            <p> {{formatDate this.birthday}} {{formatHour this.birthday}}</p>
+            <p>{{this.name}}</p>
+            <p>{{this.username}} {{this.email}}</p>
           </div>
           {{! esto es para que solamente podamos enviar una solicitud si tenemos una sesión iniciada, cabe recalcar que si ponemos esto dentro del ciclo, no puede leer el session.loggedIn esto porque cambia de contexto, por eso estamos utilizando this, para hacer referencia al contexto anterior donde se encuentra session tenemos que hacer ../ para salir un momento  }}
+          {{#if (toBoolean this.status)}}
+            <p>Es mi amigo</p>
+            {{else}}
+            <p>Por responder...</p>
+          {{/if}}
         </div>
       </li>
     {{/each}}
   </ul>
 {{else}}
-  <p class="text-red-500">Ningun solicitud de amistad enviada</p>
+  <p class="text-red-500">Ninguna solicitud de amistad enviada</p>
 {{/if}}
 
 

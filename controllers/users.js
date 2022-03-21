@@ -15,7 +15,7 @@ class UserController {
 
   async getUsersView(req, res) {
     let resData;
-    //este if es para sacarnos de la petición del readAll y para ver con quienes ya tenemos solicitud de amistad, es decir, quienes son nuestros amigos
+    /* este if nos sirve para filtrar al usuario de user y ademas de filtrar a los que le hemos enviado solicitud (PERO NO HEMOS FILTRADO LAS SOLICITUDES QUE RECIBIMOS, faltaría agregar eso) */
     if (req.session.loggedIn) {
       const { people, peopleWithFriendRequest } = await User.iCanAddIt(
         req.session.idUser
@@ -61,6 +61,17 @@ class UserController {
 
     res.redirect("/");
   }
+
+  /* el idFriend1 es quien envio y el idFriend2 es quien recibio la wea, pero tambien el que va a aceptar */
+  async acceptFriend(req, res) {
+    const sender = req.params.idFriend;
+
+    /* me es req.session.idUser */
+    await User.acceptFriend(sender, req.session.idUser);
+
+    res.redirect("/");
+  }
+
   /* SEARCH */
   async search(req, res) {
     const { search } = req.query;
