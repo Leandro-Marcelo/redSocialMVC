@@ -57,12 +57,14 @@ class AuthController {
 
     /* los datos que vienen de la petición post en formato json se le envia como data a la class User para que cree un usuario con estos datos y lo retorna, luego lo vemos por el log y nos redirecciona. Repasar POO xd */
     const newUser = new User(req.body);
+    /* console.log(newUser); */
     /* si imprimimos newUser ahora su date esta en formato de la DB */
     /* aca no usamos await porque no es un proceso asincrono, no va hacer una consulta a una db o hacer un fetch por lo que lo dejamos tal cual */
     /* Este validate() valida si todos los campos fueron rellenos y que la contraseña sea igual a repeated password */
     const validation = newUser.validate();
     if (validation.success) {
       const userSaved = await newUser.save();
+      /* console.log(newUser); */
       if (userSaved.success) {
         return res.redirect("/");
         /* este else es una validación en caso de que, haya rellenado todos los campos, por lo que paso la primera validación sin embargo, no se pudo guardar en la base de datos por err.duplicate.entry por lo que gestionamos el error y lo mostramos en la UI */

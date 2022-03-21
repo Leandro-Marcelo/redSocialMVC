@@ -1,0 +1,31 @@
+<main class="flex justify-center mt-20">
+
+  <form
+    class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5"
+    action="/createPost"
+    method="post"
+  >
+    <input
+      type="text"
+      name="description"
+      placeholder="description..."
+      value="{{post.description}}"
+      class="p-2"
+      required
+    />
+    <button class="bg-blue-200">Enviar</button>
+    {{! este unless es como un if !() }}
+    {{! si existe error, muestra un modal que le dice el error que tiene, es decir, el frontend muestra el error que se produjo en el backend  }}
+    {{#unless validation.success}}
+      <ul>
+        {{#each validation.errors}}
+          <li class="text-red-700">
+            {{! este this va a mostrar en pantalla cada error del arreglo, o sea esta iterando el validation.erros, ya que acá no existe el user in users que tiene pug }}
+            {{this}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/unless}}
+
+  </form>
+</main>

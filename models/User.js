@@ -42,6 +42,7 @@ class User {
     return await query("SELECT * FROM users");
   }
 
+  /* no deberia llamarse puedo agregarlo porque tambien te devuelve las personas a las cuales enviaste solicitud  */
   static async iCanAddIt(idUser) {
     /* filtrar al user de users y luego filtrar para que solo le devuelva a las personas que no les ha enviado solicitud de amistad */
     const people = await query(
@@ -68,7 +69,7 @@ class User {
       profile_pic: this.profilePic,
       password: this.password,
     });
-    /* le asigna el id que devuelve la db a la propiedad idUser(si tenia la reemplaza si no tenía la crea) de la instancia User  */
+    /* le asigna el id que devuelve la db a la propiedad idUser del objeto que acabamos de instanciar de la clase User(si tenia la reemplaza si no tenía la crea)  */
     this.idUser = newUser.id;
     return newUser;
   }

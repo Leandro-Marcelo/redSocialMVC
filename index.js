@@ -17,6 +17,7 @@ const session = require("express-session");
 //Importando rutas
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
 const addSessionToTemplate = require("./middleware/addSessionToTemplate");
 
 // engine.registerHelper("formatDate",(date)=>{
@@ -168,6 +169,7 @@ app.engine(
 
 app.use(userRouter);
 app.use(authRouter);
+app.use(postRouter);
 
 /* la razon de usar .env es que al momento de hacer deploy, el mismo heroku, netlify nos va a tirar un host y la idea es que nosotros lo tomemos y lo utilicemos. Es decir, que sea dinamico y no estatico igual para la configuración de la DB (porque asi son mas seguras de guardarlas y sobre todo si luego compartimos nuestro proyecto esos detalles de la configuración se cambiaría muy facilmente desde el archivo .env, entonces normalmente nosotros lo hacemos en las variables de entorno tambien porque son privadas para tener acceso a las variables de entorno tendríamos que tener acceso a la computadora real física donde esta definido o conectarnos desde ssh o algo así y para eso necesitamos código de encriptación, inclusive podemos tener variables de entorno encriptadas ). Digamos que desplegamos la aplicación en un servicio en la nube que ya nos dio un puerto y ahora para utilizarlo tenemos que llamarlo de las variables de entorno que sería tipo así: process.env.PORT de hecho esto hacemos para desployear en heroku*/
 /* para esteblecer una variable de entorno en nuestro local pc hacemos export PORT=3500 y luego lo utilizamos con process.env.PORT lo que sucede es que esto no es práctico por eso trabajamos con una librería llamado dotenv que directamente nos carga todas las variables del entorno que definimos en un archivo */

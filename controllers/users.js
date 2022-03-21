@@ -14,6 +14,7 @@ class UserController {
   // }
   /* xd */
   async getUsersView(req, res) {
+    console.log(req.session);
     let resData;
     /* este if nos sirve para filtrar al usuario de user y ademas de filtrar a los que le hemos enviado solicitud (PERO NO HEMOS FILTRADO LAS SOLICITUDES QUE RECIBIMOS, faltaría agregar eso) */
     if (req.session.loggedIn) {
