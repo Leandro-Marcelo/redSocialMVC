@@ -5,7 +5,6 @@ class Post {
   idPost;
   /* nos tirará error: Column 'idUser' cannot be null' si no le enviamos un idUser porque yo le puse en la base de datos que no fuera nulo (not null) pero también tendría que hacer una validación en el backend no? */
   constructor(post) {
-    console.log(post);
     /* console.log("parametros de constreuctor", post, idUser); */
     this.description = post.description;
     this.idUser = post.idUser;
