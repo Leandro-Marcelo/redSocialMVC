@@ -7,7 +7,7 @@ const path = require("path");
 /* Aquí lo mismo podría traerse config y usar config.Port pero bueno, en backend fundamentals utiliza {} */
 /* aqui pondrías pensar de que deberia ser require("./config/index") pero por defecto JS agarra el index*/
 const { port, secret } = require("./config");
-console.log(port);
+/* console.log(port); */
 const { engine } = require("express-handlebars");
 /* Instalo esta librería  */
 const { DateTime, Interval } = require("luxon");
@@ -45,6 +45,7 @@ app.use(
 /* AQUÍ ES IMPORTANTE EL ORDEN, si nosotros utilizamos este middleware addSession.... antes del middleware session, no tendría los datos de la sesión y no funcionaría. Por eso tiene que hacerse despues */
 /* si la ejecutamos tira error, si abrimos parentesis es para pasarle una función que retorna algo, aunque si algo tira error siempre podes probar sin ejecutarla */
 app.use(addSessionToTemplate);
+app.use(express.json());
 
 /* otra forma de configurarlo
 const { handlebars } = require("express-handlebars");

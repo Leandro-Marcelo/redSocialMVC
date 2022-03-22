@@ -7,6 +7,50 @@
 <br />
 <br />
 
+<form
+  class="bg-gray-100 flex flex-col w-1/2 p-10 gap-5"
+  action="/comment/search"
+  method="get"
+>
+  <input
+    type="search"
+    name="search"
+    placeholder="search comentarios..."
+    class="p-2"
+    required
+  />
+  <button class="bg-blue-200">Buscar Comentarios</button>
+
+  {{#if hasComentarios}}
+    <h2>Resultado de busqueda</h2>
+    <ul class="p-5">
+      {{#each comentarios}}
+        <li class="bg-gray-100 p-2 mt-5">
+          <div class="flex items-center gap-5">
+            <img class="w-10 h-10 rounded-full" src="{{this.profile_pic}}" />
+            <div>
+              <p>{{this.name}} {{this.username}}</p>
+              <p>{{this.comment}}</p>
+            </div>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="text-red-500">Esta Post no tiene comentarios</p>
+  {{/if}}
+  {{#unless validation.success}}
+    <ul>
+      {{#each validation.errors}}
+        <li class="text-red-700">
+          {{this}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/unless}}
+
+</form>
+
 {{#if hasPosts}}
   <h2>Posts</h2>
   <ul class="p-5">
@@ -21,7 +65,12 @@
           <div>
             <p> {{formatDate this.date}} {{formatHour this.date}}</p>
             <p>La descripción del post: {{this.description}}</p>
+            <a href="/like/{{this.id}}">❤️</a>
           </div>
+          <form action="/comment/{{this.id}}" method="post">
+            <input type="text" name="comment" placeholder="comment" />
+            <button type="submit">comentar</button>
+          </form>
         </div>
       </li>
     {{/each}}

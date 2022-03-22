@@ -58,6 +58,40 @@ class PostController {
     /* signup */
     return res.render("createPost", { validation, post: newPost });
   }
+
+  async likePost(req, res) {
+    /* console.log(req.session.idUser); */
+    const { id } = req.params;
+    if (!req.session.idUser) return res.status(403).redirect("/");
+    /* le envio el id del post que quiero likear/deslikear y mi id */
+    const response = await Post.likes(id, req.session.idUser);
+    return res.status(200).redirect("/homePost");
+  }
+
+  async comment(req, res) {
+    if (!req.session.idUser) return res.status(403).redirect("/");
+    const id = req.params.id;
+    const comment = req.body.comment;
+    /* le envio el id del post que quiero likear/deslikear y mi id */
+    const response = await Post.comment(comment, id, req.session.idUser);
+    return res.status(200).redirect("/homePost");
+  }
+
+  /* SEARCH */
+  async search(req, res) {
+    /* console.log(req.session.idUser); */
+    const { search } = req.query;
+    let comentarios = await Post.commentPost(search);
+    const posts = await Post.readAll();
+    let resData = {
+      comentarios,
+      hasComentarios: comentarios.length > 0,
+      posts,
+      hasPosts: posts.length > 0,
+    };
+
+    return res.render("homePost", resData);
+  }
 }
 
 module.exports = PostController;

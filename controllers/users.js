@@ -14,7 +14,9 @@ class UserController {
   // }
   /* xd */
   async getUsersView(req, res) {
-    /* console.log(req.session); */
+    console.log(`this`, req.session);
+
+    /* console.log(req.session.idUser); */
 
     let resData;
     /* este if nos sirve para filtrar al usuario de user y ademas de filtrar a los que le hemos enviado solicitud (PERO NO HEMOS FILTRADO LAS SOLICITUDES QUE RECIBIMOS, faltaría agregar eso) */
@@ -76,7 +78,7 @@ class UserController {
 
   /* SEARCH */
   async search(req, res) {
-    console.log(req.session.idUser);
+    /* console.log(req.session.idUser); */
     const { search } = req.query;
     let userSearched = await User.likeName("users", search);
     let { people, peopleWithFriendRequest } = await User.iCanAddIt(
@@ -99,39 +101,6 @@ class UserController {
     }
     return res.render("home", resData);
   }
-
-  /* LIKE  */
-
-  /*  async like(req, res) {
-    const { id } = req.params;
-    //le envio el id del post que quiero likear/deslikear y mi id
-    const response = await postsService.likeDisLike(id, req.body);
-    return res.status(200).json(response);
-  } */
 }
 
 module.exports = UserController;
-
-/* 
-const {query} = require("../config/database")
-
-async function getUsers(req, res){
-  const del = await query("DELETE FROM users")
-  const users  = await query("SELECT * FROM users")
-  return res.render("home", {
-    username:"tzuzulcode",
-    users,
-    hasUsers:users.length > 0
-  })
-}
-
-module.export = {getUsers}
-
- y en el router simplemente utilizan getUsers
-
- CONCLUSIÓN: EN EL ROUTER ESTA CORRECTO, sin embargo, acá en el controllers no esta correcto aparte de devolver render y todo, debería de dividir la funcionalidad a lo mejor quiero leer esos usuarios en alguna otra función o en alguna otra parte de la app, entonces no debería tener esta funcionalidad:    const del = await query("DELETE FROM users")
-  const users  = await query("SELECT * FROM users")
- 
- anidada junto con un render, tendría que dividir de mejor forma eso. Entonces que se sugiere en los controllers? en los controllers se suguiere que nosotros creemos una clase pero acá vamos a implementar algunas funcionalidades extras 
-
-*/

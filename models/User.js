@@ -45,7 +45,7 @@ class User {
 
   /* no deberia llamarse puedo agregarlo porque tambien te devuelve las personas a las cuales enviaste solicitud  */
   static async iCanAddIt(idUser) {
-    console.log(idUser);
+    /* console.log(idUser); */
     /* te muestra todos los usuarios pero no a Pepe y a no a los que Pepe les ha enviado solicitud o los que son amigos de Pepe y tampoco los que le enviaron solicitud a Pepe. (Todo esto para saber a quienes podemos enviar solicitud de amistad) */
     const people = await query(
       "SELECT * FROM users WHERE id!=? AND id NOT IN (SELECT users.id FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend1 = ?) AND id NOT IN (SELECT users.id FROM users JOIN friendship ON users.id=friendship.idFriend1 WHERE friendship.idFriend2 = ? AND friendship.status = 0)",
@@ -57,7 +57,7 @@ class User {
       "SELECT * FROM users JOIN friendship ON users.id=friendship.idFriend2 WHERE friendship.idFriend1=?",
       [idUser]
     );
-    console.log(people, peopleWithFriendRequest);
+    /* console.log(people, peopleWithFriendRequest); */
     return { people, peopleWithFriendRequest };
   }
 

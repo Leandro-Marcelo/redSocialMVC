@@ -1,7 +1,12 @@
 <nav class="bg-blue-500 p-5 text-white">
   <ul class="flex gap-10">
     <li><a href="/">Home</a></li>
-    <li><a href="/signup">Sign up</a></li>
+    {{#if session.loggedIn}}
+      <li><a href="/" class="none"></a></li>
+    {{else}}
+      <li><a href="/signup">Sign up</a></li>
+    {{/if}}
+
     {{! como el navbar puede acceder a este loggedIn }}
     {{#if session.loggedIn}}
       <li><a href="/logout">Logout</a></li>
@@ -12,7 +17,18 @@
     {{#if hasUsers}}
       <li><a href="#">Me cumplí</a></li>
     {{/if}}
-    <li><a href="#">Link 1</a></li>
-    <li><a href="#">Link 1</a></li>
+
+    {{#if session.loggedIn}}
+      <li><a href="/homePost">Home Post</a></li>
+    {{else}}
+      <li><a href="/">Home Post (logeate)</a></li>
+    {{/if}}
+
+    {{#if session.loggedIn}}
+      <li><a href="/createPost">Create Post</a></li>
+    {{else}}
+      <li><a href="/">Create Post (logeate) </a></li>
+    {{/if}}
+
   </ul>
 </nav>

@@ -17,6 +17,27 @@ class Post {
     );
   }
 
+  static async commentPost(postNumber) {
+    return await query(
+      "SELECT * FROM users JOIN comments ON users.id = comments.idUser WHERE comments.idPost = ?",
+      [postNumber]
+    );
+  }
+
+  static async likes(idPost, idUser) {
+    return await query("INSERT INTO likes(idPost, idUser) VALUES(?,?)", [
+      idPost,
+      idUser,
+    ]);
+  }
+
+  static async comment(comment, idPost, idUser) {
+    return await query(
+      "INSERT INTO comments(comment, idPost, idUser) VALUES(?, ?, ?)",
+      [comment, idPost, idUser]
+    );
+  }
+
   static async iCanAddIt(idUser) {
     /* filtrar al user de users y luego filtrar para que solo le devuelva a las personas que no les ha enviado solicitud de amistad */
     const people = await query(
